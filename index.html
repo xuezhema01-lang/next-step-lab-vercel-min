@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>下一步实验室 API 测试版</title>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#f7f3ed;margin:0;color:#27231f}
+.wrap{max-width:760px;margin:0 auto;padding:28px 18px}
+.card{background:#fffaf4;border:1px solid #eadfd3;border-radius:24px;padding:22px;box-shadow:0 18px 45px rgba(50,39,28,.1)}
+h1{font-size:36px;margin:0 0 10px;letter-spacing:-.04em}
+p{color:#756d64;line-height:1.7}
+label{display:block;margin-top:16px;font-weight:700}
+textarea,input,select{width:100%;box-sizing:border-box;margin-top:8px;border:1px solid #eadfd3;border-radius:16px;padding:13px;font-size:16px;background:#fffdf9}
+textarea{min-height:90px}
+button{width:100%;margin-top:18px;border:0;border-radius:16px;padding:15px;font-size:17px;font-weight:800;color:white;background:#6d5dfc}
+.out{white-space:pre-wrap;background:#fffdf9;border:1px dashed #eadfd3;border-radius:18px;padding:16px;margin-top:18px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>下一步实验室</h1>
+    <p>这是最小 API 测试版。先验证 Vercel 能不能安全调用 Gemini API。跑通后，再把它接回完整界面。</p>
+    <label>你现在在纠结什么？</label>
+    <textarea id="dilemma">我要不要读博？</textarea>
+    <label>你想得到什么？</label>
+    <input id="want" value="成为心理学专家，进入世界前25%的水平"/>
+    <label>你害怕什么代价？</label>
+    <input id="fear" value="花很多时间却没有任何成就"/>
+    <label>难度</label>
+    <select id="difficulty">
+      <option>轻量</option>
+      <option selected>标准</option>
+      <option>挑战</option>
+    </select>
+    <button id="btn">生成今天的小验证</button>
+    <div class="out" id="out">结果会显示在这里。</div>
+  </div>
+</div>
+<script>
+document.getElementById("btn").onclick = async () => {
+  const out = document.getElementById("out");
+  out.textContent = "正在调用 Gemini API...";
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        dilemma: document.getElementById("dilemma").value,
+        want: document.getElementById("want").value,
+        fear: document.getElementById("fear").value,
+        difficulty: document.getElementById("difficulty").value
+      })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "调用失败");
+    out.textContent =
+`【核心冲突】
+${data.coreConflict}
+
+【今天不用决定什么】
+${data.notDecide}
+
+【今天只验证什么】
+${data.verifyQuestion}
+
+【今日小验证】
+${data.action}
+
+【怎么判断】
+${data.judgement}
+
+使用模型：${data.model || "未返回"}`;
+  } catch (e) {
+    out.textContent = "出错了：\n" + e.message;
+  }
+};
+</script>
+</body>
+</html>

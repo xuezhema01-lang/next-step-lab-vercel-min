@@ -1,46 +1,97 @@
-const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"];
+const MODELS = [
+  "google/gemini-2.5-flash",
+  "deepseek/deepseek-v4-flash:free"
+];
 
 function rules(difficulty) {
-  if (difficulty === "轻量") return "轻量版：5分钟以内；只做一个动作；不读长文；不写超过一句话；不联系别人；不做最终判断。";
-  if (difficulty === "挑战") return "挑战版：30分钟左右；可以有小产出；但不能生成大型计划。";
+  if (difficulty === "轻量") {
+    return "轻量版：5分钟以内；只做一个动作；不读长文；不写超过一句话；不联系别人；不做最终判断。";
+  }
+  if (difficulty === "挑战") {
+    return "挑战版：30分钟左右；可以有小产出；但不能生成大型计划。";
+  }
   return "标准版：10-20分钟；有一点挑战和小产出；不需要外部评价。";
 }
 
-async function callGemini(prompt, key) {
+function extractJson(text) {
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    const start = text.indexOf("{");
+    const end = text.lastIndexOf("}");
+    if (start !== -1 && end !== -1 && end > start) {
+      return JSON.parse(text.slice(start, end + 1));
+    }
+    throw new Error("模型没有返回可解析的 JSON：" + text);
+  }
+}
+
+async function callOpenRouter(prompt, key) {
   let lastError = "";
+
   for (const model of MODELS) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
-    const response = await fetch(url, {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: {
+        "Authorization": `Bearer ${key}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://next-step-lab.vercel.app",
+        "X-Title": "Next Step Lab"
+      },
       body: JSON.stringify({
-        contents: [{ role: "user", parts: [{ text: prompt }] }],
-        generationConfig: {
-          temperature: 0.7,
-          maxOutputTokens: 900,
-          responseMimeType: "application/json"
-        }
+        model,
+        messages: [
+          {
+            role: "system",
+            content: "你是一个中文 AI 探索陪跑器。你不替用户做决定，只把纠结变成今天可执行的小验证。回答必须简洁、具体、温和，并严格输出 JSON。"
+          },
+          {
+            role: "user",
+            content: prompt
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 900
       })
     });
+
     const data = await response.json().catch(() => ({}));
+
     if (response.ok) {
-      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
-      const parsed = JSON.parse(text);
+      const content = data?.choices?.[0]?.message?.content || "";
+      const parsed = extractJson(content);
       parsed.model = model;
       return parsed;
     }
+
     lastError = `${model}: ${data?.error?.message || response.statusText}`;
-    if (!(response.status === 404 || data?.error?.status === "NOT_FOUND")) break;
+
+    // 如果一个模型失败，就继续试下一个模型
+    continue;
   }
-  throw new Error("Gemini API 调用失败。已尝试模型：" + MODELS.join(", ") + "。最后错误：" + lastError);
+
+  throw new Error(
+    "OpenRouter API 调用失败。已尝试模型：" +
+    MODELS.join(", ") +
+    "。最后错误：" +
+    lastError
+  );
 }
 
 module.exports = async (req, res) => {
-  if (req.method !== "POST") return res.status(405).json({ error: "只支持 POST" });
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "只支持 POST" });
+  }
+
   try {
-    const key = process.env.GEMINI_API_KEY;
-    if (!key) throw new Error("缺少 GEMINI_API_KEY。请在 Vercel 环境变量中设置。");
+    const key = process.env.OPENROUTER_API_KEY;
+
+    if (!key) {
+      throw new Error("缺少 OPENROUTER_API_KEY。请在 Vercel 环境变量中设置。");
+    }
+
     const p = req.body || {};
+
     const prompt = `
 你是“下一步实验室”的 AI 探索陪跑器。
 你不替用户做决定，只把大纠结变成今天可执行的小验证。
@@ -52,17 +103,20 @@ module.exports = async (req, res) => {
 
 难度规则：${rules(p.difficulty)}
 
-只输出 JSON，不要 Markdown：
+请只输出 JSON，不要 Markdown，不要解释。
+JSON 格式如下：
 {
   "coreConflict": "一句话总结用户核心冲突",
   "notDecide": "告诉用户今天不用决定什么",
   "verifyQuestion": "今天只验证的一个小问题",
   "action": "一个具体动作，必须符合难度规则",
   "judgement": "最多三条判断标准，写成一段话"
-}`;
-    const result = await callGemini(prompt, key);
-    res.status(200).json(result);
+}
+`;
+
+    const result = await callOpenRouter(prompt, key);
+    return res.status(200).json(result);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    return res.status(500).json({ error: e.message });
   }
 };

@@ -6,69 +6,50 @@
 <title>下一步实验室</title>
 <style>
 body{margin:0;background:#f7f3ed;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;color:#27231f}
-.wrap{max-width:860px;margin:0 auto;padding:24px 16px 88px}
+.wrap{max-width:900px;margin:0 auto;padding:24px 16px 88px}
 .card{background:#fffaf4;border:1px solid #eadfd3;border-radius:26px;padding:22px;margin:18px 0;box-shadow:0 14px 35px rgba(50,39,28,.08)}
-h1{font-size:42px;margin:0 0 10px}
-p{line-height:1.7;color:#756d64}
-label{display:block;font-weight:800;margin:16px 0 8px}
+h1{font-size:42px;margin:0 0 10px}p{line-height:1.7;color:#756d64}label{display:block;font-weight:800;margin:16px 0 8px}
 textarea,input,select{width:100%;box-sizing:border-box;border:1px solid #eadfd3;border-radius:16px;background:#fffdf9;padding:13px;font-size:16px}
 textarea{min-height:90px}
 button{border:0;border-radius:16px;padding:14px 16px;font-size:16px;font-weight:900;margin-top:12px}
-.primary{width:100%;background:#6d5dfc;color:white}
-.secondary{background:#efedff;color:#6d5dfc}
-.danger{background:#fff1ed;color:#9a594b}
-.ghost{background:#fffdf9;color:#756d64;border:1px solid #eadfd3}
-.row{display:flex;gap:10px;flex-wrap:wrap}.row button{flex:1}
-.section{border-bottom:1px dashed #eadfd3;padding:14px 0}.section h3{color:#6d5dfc;margin:0 0 8px}
-.tag{display:inline-block;background:#efedff;color:#6d5dfc;border-radius:999px;padding:5px 9px;margin-right:6px;font-size:12px}
-.choice{border:1px solid #eadfd3;background:#fffdf9;color:#756d64}
-.choice.active{background:#efedff;color:#6d5dfc;border-color:#6d5dfc}
+.primary{width:100%;background:#6d5dfc;color:white}.secondary{background:#efedff;color:#6d5dfc}.danger{background:#fff1ed;color:#9a594b}.ghost{background:#fffdf9;color:#756d64;border:1px solid #eadfd3}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row button{flex:1}.section{border-bottom:1px dashed #eadfd3;padding:14px 0}.section h3{color:#6d5dfc;margin:0 0 8px}
+.tag{display:inline-block;background:#efedff;color:#6d5dfc;border-radius:999px;padding:5px 9px;margin:4px 6px 4px 0;font-size:12px}
+.choice{border:1px solid #eadfd3;background:#fffdf9;color:#756d64}.choice.active{background:#efedff;color:#6d5dfc;border-color:#6d5dfc}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.plan{display:grid;gap:8px}.day{border:1px solid #eadfd3;border-radius:16px;padding:12px;background:#fffdf9}.day.current{border-color:#6d5dfc;background:#efedff}.day b{color:#6d5dfc}
 .assistantBtn{position:fixed;right:16px;bottom:16px;background:#34266b;color:white;z-index:10}
-.assistantBox{display:none;position:fixed;right:16px;bottom:78px;width:min(420px,calc(100vw - 32px));max-height:70vh;background:#fffaf4;border:1px solid #eadfd3;border-radius:22px;box-shadow:0 18px 45px rgba(50,39,28,.16);z-index:11;overflow:hidden}
-.assistantBox.open{display:block}.assistantHead{padding:14px 16px;border-bottom:1px solid #eadfd3;display:flex;justify-content:space-between;align-items:center}
-.assistantBody{padding:14px 16px;max-height:48vh;overflow:auto}
-.msg{border-radius:16px;padding:10px 12px;margin:8px 0;line-height:1.6;font-size:14px}
-.user{background:#fff4e6}.bot{background:#efedff}
-.assistantInput{display:flex;gap:8px;padding:12px 16px;border-top:1px solid #eadfd3}
-.assistantInput button{margin:0;background:#6d5dfc;color:white}
-.quick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-.quick button{font-size:13px;padding:8px 10px;margin:0;background:#fffdf9;color:#756d64;border:1px solid #eadfd3;border-radius:999px}
+.assistantBox{display:none;position:fixed;right:16px;bottom:78px;width:min(430px,calc(100vw - 32px));max-height:70vh;background:#fffaf4;border:1px solid #eadfd3;border-radius:22px;box-shadow:0 18px 45px rgba(50,39,28,.16);z-index:11;overflow:hidden}
+.assistantBox.open{display:block}.assistantHead{padding:14px 16px;border-bottom:1px solid #eadfd3;display:flex;justify-content:space-between;align-items:center}.assistantBody{padding:14px 16px;max-height:48vh;overflow:auto}
+.msg{border-radius:16px;padding:10px 12px;margin:8px 0;line-height:1.6;font-size:14px}.user{background:#fff4e6}.bot{background:#efedff}
+.assistantInput{display:flex;gap:8px;padding:12px 16px;border-top:1px solid #eadfd3}.assistantInput button{margin:0;background:#6d5dfc;color:white}
+.quick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.quick button{font-size:13px;padding:8px 10px;margin:0;background:#fffdf9;color:#756d64;border:1px solid #eadfd3;border-radius:999px}
 .small{font-size:13px;color:#8b8177}
 </style>
 </head>
 <body>
 <div class="wrap">
 <h1>下一步实验室</h1>
-<p>当前版本：今日小验证、今日反馈、阶段总结、实验室助理都接入 API。</p>
+<p>当前版本：探索路线、今日小验证、今日记录、今日反馈、阶段总结、实验室助理都接入 API。</p>
 
 <div class="card">
 <label>你现在在纠结什么？</label>
 <textarea id="dilemma" placeholder="比如：我要不要读博？要不要辞职？要不要做自媒体？要不要继续这段关系？要不要投入一个新项目？">我要不要读博？</textarea>
-
 <label>你想得到什么？</label>
 <input id="want" value="成为心理学专家，进入世界前25%的水平" placeholder="比如：更自由的生活、更强的专业能力、更稳定的收入、被看见的机会、长期成长、确认自己真正想要什么"/>
-
 <label>你害怕什么代价？</label>
 <input id="fear" value="花很多时间却没有任何成就" placeholder="比如：浪费时间、失败丢脸、影响收入、消耗情绪、错过别的机会、投入很多却没有结果"/>
-
 <label>探索模式</label>
-<select id="days">
-<option value="1">1天快速试探</option>
-<option value="3">3天小探索</option>
-<option value="7" selected>7天认真验证</option>
-</select>
-
+<select id="days"><option value="1">1天快速试探</option><option value="3">3天小探索</option><option value="7" selected>7天认真验证</option></select>
 <label>今日心力</label>
 <select id="energy"><option value="低">低</option><option value="中" selected>中</option><option value="高">高</option></select>
-<button class="primary" onclick="start()">生成今天的小验证</button>
+<button class="primary" onclick="start()">生成探索路线，并开始今天的小验证</button>
 </div>
 
 <div class="card" id="screen"><p>结果会显示在这里。</p></div>
 </div>
 
 <button class="assistantBtn" onclick="toggleAssistant()">🧪 实验室助理</button>
-
 <div class="assistantBox" id="assistantBox">
 <div class="assistantHead"><strong>实验室助理</strong><button class="ghost" style="padding:8px 10px;margin:0" onclick="toggleAssistant()">关闭</button></div>
 <div class="assistantBody" id="assistantMessages">
@@ -83,81 +64,105 @@ button{border:0;border-radius:16px;padding:14px 16px;font-size:16px;font-weight:
 </div>
 
 <script>
-const state={step:1,days:7,energy:'中',difficulty:'标准',records:[],card:null};
+const state={step:1,day:1,days:7,energy:'中',difficulty:'标准',records:[],card:null,plan:null};
 const screen=document.getElementById('screen');
 
 function esc(s){return String(s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;")}
-function payload(){return{dilemma:dilemma.value,want:want.value,fear:fear.value,difficulty:state.difficulty,days:state.days,step:state.step,records:state.records,energy:state.energy}}
+function todayTheme(){return state.plan?.dayThemes?.find(x=>Number(x.day)===Number(state.day))||null}
+function payload(){const t=todayTheme();return{dilemma:dilemma.value,want:want.value,fear:fear.value,difficulty:state.difficulty,days:state.days,step:state.step,currentDay:state.day,todayTheme:t,records:state.records,energy:state.energy}}
 async function api(path,body){const r=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'接口调用失败');return d}
 function loading(t){screen.innerHTML='<h2>'+t+'</h2><p>正在调用 OpenRouter，请稍等。</p>'}
 function err(e){screen.innerHTML='<h2>出错了</h2><p>'+esc(e)+'</p><button class="primary" onclick="generate()">再试一次</button>'}
 
-async function start(){state.days=Number(days.value);state.energy=energy.value;state.difficulty=state.energy==='低'?'轻量':state.energy==='高'?'挑战':'标准';state.step=1;state.records=[];generate()}
-async function generate(){loading('正在生成今天的小验证');try{const d=await api('/api/generate',payload());state.card=d;task(d)}catch(e){err(e.message)}}
+function renderPlan(){
+ if(!state.plan)return '';
+ return `<div class="section"><h3>${esc(state.plan.modeName||'探索路线')}</h3><p>${esc(state.plan.planSummary||'')}</p><div class="plan">${
+ state.plan.dayThemes.map(d=>`<div class="day ${Number(d.day)===Number(state.day)?'current':''}"><b>第${d.day}天｜${esc(d.theme)}</b><br><span>${esc(d.focus)}</span></div>`).join('')
+ }</div></div>`;
+}
+
+async function start(){
+ state.days=Number(days.value);state.energy=energy.value;state.difficulty=state.energy==='低'?'轻量':state.energy==='高'?'挑战':'标准';state.step=1;state.day=1;state.records=[];state.card=null;
+ loading('正在生成探索路线');
+ try{
+  const p=await api('/api/plan',{dilemma:dilemma.value,want:want.value,fear:fear.value,days:state.days});
+  state.plan=p;
+  await generate();
+ }catch(e){err(e.message)}
+}
+
+async function generate(){
+ loading('正在生成今天的小验证');
+ try{const d=await api('/api/generate',payload());state.card=d;task(d)}catch(e){err(e.message)}
+}
 
 function task(c){
-screen.innerHTML=`<h2>今日小验证</h2>
-<div class="section"><h3>你的核心冲突</h3><p>${esc(c.coreConflict)}</p></div>
-<div class="section"><h3>今天不用决定什么</h3><p>${esc(c.notDecide)}</p></div>
-<div class="section"><h3>今天只验证什么</h3><p>${esc(c.verifyQuestion)}</p></div>
-<div class="section"><h3>今日小验证</h3><p><span class="tag">${esc(state.difficulty)}</span><span class="tag">${esc(c.model||'AI')}</span></p><p>${esc(c.action)}</p></div>
-<div class="section"><h3>怎么判断</h3><p>${esc(c.judgement)}</p></div>
-<div class="row"><button class="danger" onclick="adjust('轻量')">太难了，换轻一点</button><button class="secondary" onclick="doing()">刚刚好，我去做</button><button class="ghost" onclick="adjust('挑战')">太简单了，换有挑战一点</button></div>`;
+ const t=todayTheme();
+ screen.innerHTML=`${renderPlan()}<h2>第 ${state.day} / ${state.days} 天：${esc(t?.theme||'今日主题')}</h2>
+ <p>${esc(t?.focus||'今天只做一个小验证。')}</p>
+ <div class="section"><h3>你的核心冲突</h3><p>${esc(c.coreConflict)}</p></div>
+ <div class="section"><h3>今天不用决定什么</h3><p>${esc(c.notDecide)}</p></div>
+ <div class="section"><h3>今天只验证什么</h3><p>${esc(c.verifyQuestion)}</p></div>
+ <div class="section"><h3>今日小验证</h3><p><span class="tag">${esc(state.difficulty)}</span><span class="tag">今日第${state.step}步</span><span class="tag">${esc(c.model||'AI')}</span></p><p>${esc(c.action)}</p></div>
+ <div class="section"><h3>怎么判断</h3><p>${esc(c.judgement)}</p></div>
+ <div class="row"><button class="danger" onclick="adjust('轻量')">太难了，换轻一点</button><button class="secondary" onclick="doing()">刚刚好，我去做</button><button class="ghost" onclick="adjust('挑战')">太简单了，换有挑战一点</button></div>`;
 }
 
 function adjust(d){state.difficulty=d;generate()}
-function doing(){screen.innerHTML=`<h2>执行中</h2><p>${esc(state.card?.action||'完成当前小验证。')}</p><div class="row"><button class="secondary" onclick="journal()">我做完了，开始记录</button><button class="ghost" onclick="journal('没做')">没做，记录原因</button><button class="danger" onclick="adjust('轻量')">还是太难，换轻一点</button></div>`}
+function doing(){screen.innerHTML=`${renderPlan()}<h2>执行中｜第${state.day}天第${state.step}步</h2><p>${esc(state.card?.action||'完成当前小验证。')}</p><div class="row"><button class="secondary" onclick="journal()">我做完了，开始记录</button><button class="ghost" onclick="journal('没做')">没做，记录原因</button><button class="danger" onclick="adjust('轻量')">还是太难，换轻一点</button></div>`}
 
 function setActive(id){document.querySelectorAll('#'+id+' .choice').forEach(b=>b.onclick=()=>{document.querySelectorAll('#'+id+' .choice').forEach(x=>x.classList.remove('active'));b.classList.add('active')})}
 
 function journal(done='做完了'){
-screen.innerHTML=`<h2>今日记录</h2>
-<p>根据今天的判断标准，写下行动后的真实反应。不用写长，只要记录一点你真实感受到的东西。它会帮助 AI 判断：下一步该继续、降难度，还是换方向。</p>
-<label>你完成了吗？</label>
-<div class="grid" id="done">${['做完了','做了一部分','没做'].map(x=>`<button class="choice ${x===done?'active':''}" data-v="${x}">${x}</button>`).join('')}</div>
-<label>这一步给你的感觉更接近：</label>
-<div class="grid" id="feel">${['更想继续','有点抗拒','变清楚了','更迷茫了','太难了','没感觉'].map((x,i)=>`<button class="choice ${i===2?'active':''}" data-v="${x}">${x}</button>`).join('')}</div>
-<label>写一句真实反应</label>
-<textarea id="exp" placeholder="写一句就够：我做完后更___，因为___。比如：我做完后更焦虑，因为任务入口太高。"></textarea>
-<button class="primary" onclick="feedback()">生成今日反馈</button>`;
-setActive('done');setActive('feel')
+ screen.innerHTML=`${renderPlan()}<h2>今日记录</h2>
+ <p>根据今天的判断标准，写下行动后的真实反应。不用写长，只要记录一点你真实感受到的东西。它会帮助 AI 判断：下一步该继续、降难度，还是换方向。</p>
+ <label>你完成了吗？</label><div class="grid" id="done">${['做完了','做了一部分','没做'].map(x=>`<button class="choice ${x===done?'active':''}" data-v="${x}">${x}</button>`).join('')}</div>
+ <label>这一步给你的感觉更接近：</label><div class="grid" id="feel">${['更想继续','有点抗拒','变清楚了','更迷茫了','太难了','没感觉'].map((x,i)=>`<button class="choice ${i===2?'active':''}" data-v="${x}">${x}</button>`).join('')}</div>
+ <label>写一句真实反应</label><textarea id="exp" placeholder="写一句就够：我做完后更___，因为___。比如：我做完后更焦虑，因为任务入口太高。"></textarea>
+ <button class="primary" onclick="feedback()">生成今日反馈</button>`;
+ setActive('done');setActive('feel')
 }
 
 function val(id){return document.querySelector('#'+id+' .active')?.dataset.v||''}
 function decideDifficulty(r){if(r.done==='没做'||r.feel==='太难了'||r.feel==='有点抗拒')return '轻量';if(r.done==='做完了'&&r.feel==='更想继续')return '挑战';return '学习区'}
 
 async function feedback(){
-const r={done:val('done'),feel:val('feel'),text:document.getElementById('exp').value};
-state.records.push(r);
-state.difficulty=decideDifficulty(r);
-loading('正在生成今日反馈');
-try{
-const d=await api('/api/feedback',{...payload(),records:state.records,difficulty:state.difficulty,record:r});
-screen.innerHTML=`<h2>今日反馈</h2>
-<div class="section"><h3>看见你的体验</h3><p>${esc(d.seeExperience)}</p></div>
-<div class="section"><h3>今天的一个信号</h3><p>${esc(d.signal)}</p></div>
-<div class="section"><h3>下一步建议</h3><p>${esc(d.nextSuggestion)}</p></div>
-<div class="section"><h3>系统难度</h3><p>已调整为：${esc(state.difficulty)}</p></div>
-<div class="section"><h3>使用模型</h3><p>${esc(d.model||'AI')}</p></div>
-<div class="row"><button class="secondary" onclick="next()">继续生成下一步</button><button class="ghost" onclick="tomorrow()">明天继续</button><button class="danger" onclick="summary()">结束并生成阶段总结</button></div>`;
-}catch(e){err(e.message)}
+ const r={day:state.day,step:state.step,theme:todayTheme(),task:state.card?.action||'',done:val('done'),feel:val('feel'),text:document.getElementById('exp').value};
+ state.records.push(r);state.difficulty=decideDifficulty(r);
+ loading('正在生成今日反馈');
+ try{
+  const d=await api('/api/feedback',{...payload(),records:state.records,difficulty:state.difficulty,record:r});
+  screen.innerHTML=`${renderPlan()}<h2>今日反馈</h2>
+  <div class="section"><h3>看见你的体验</h3><p>${esc(d.seeExperience)}</p></div>
+  <div class="section"><h3>今天的一个信号</h3><p>${esc(d.signal)}</p></div>
+  <div class="section"><h3>下一步建议</h3><p>${esc(d.nextSuggestion)}</p></div>
+  <div class="section"><h3>系统难度</h3><p>已调整为：${esc(state.difficulty)}</p></div>
+  <div class="section"><h3>使用模型</h3><p>${esc(d.model||'AI')}</p></div>
+  <div class="row"><button class="secondary" onclick="next()">继续今天下一步</button><button class="ghost" onclick="tomorrow()">保存，明天继续</button><button class="danger" onclick="summary()">结束并生成阶段总结</button></div>`;
+ }catch(e){err(e.message)}
 }
 
-function next(){state.step=Math.min(state.days,state.step+1);generate()}
-function tomorrow(){screen.innerHTML='<h2>明天继续</h2><p>今天已经够了。明天回来后，可以继续生成下一步。</p>'}
+function next(){state.step+=1;generate()}
+function tomorrow(){
+ if(state.days===1){screen.innerHTML=`${renderPlan()}<h2>1天快速试探已保存</h2><p>你可以结束并生成今日判断，或者把它延长成3天小探索。</p><div class="row"><button class="secondary" onclick="extendTo3()">延长为3天探索</button><button class="danger" onclick="summary()">结束并生成今日判断</button></div>`;return}
+ if(state.day>=state.days){summary();return}
+ state.day+=1;state.step=1;state.difficulty='标准';
+ screen.innerHTML=`${renderPlan()}<h2>已进入第 ${state.day} 天</h2><p>今天的主题是：${esc(todayTheme()?.theme||'今日主题')}。准备好后开始今天的小验证。</p><button class="primary" onclick="generate()">开始第${state.day}天的小验证</button>`;
+}
+async function extendTo3(){document.getElementById('days').value='3';state.days=3;state.day=Math.min(state.day,1);loading('正在延长为3天探索');try{state.plan=await api('/api/plan',{dilemma:dilemma.value,want:want.value,fear:fear.value,days:3});screen.innerHTML=`${renderPlan()}<h2>已延长为3天小探索</h2><button class="primary" onclick="generate()">继续今天的小验证</button>`}catch(e){err(e.message)}}
 
 async function summary(){
-loading('正在生成阶段总结');
-try{
-const d=await api('/api/summary',{...payload(),records:state.records,difficulty:state.difficulty});
-screen.innerHTML=`<h2>阶段总结卡</h2>
-<div class="section"><h3>这一轮探索完成了什么</h3><p>${esc(d.completed)}</p></div>
-<div class="section"><h3>目前收集到的信号</h3><p>${esc(d.signals)}</p></div>
-<div class="section"><h3>阶段性判断</h3><p>${esc(d.judgement)}</p></div>
-<div class="section"><h3>下一轮最该验证什么</h3><p>${esc(d.nextRound)}</p></div>
-<div class="section"><h3>使用模型</h3><p>${esc(d.model||'AI')}</p></div>
-<div class="row"><button class="secondary" onclick="next()">继续生成下一步</button><button class="ghost" onclick="start()">重新创建探索任务</button></div>`;
-}catch(e){err(e.message)}
+ loading('正在生成阶段总结');
+ try{
+  const d=await api('/api/summary',{...payload(),records:state.records,difficulty:state.difficulty});
+  screen.innerHTML=`${renderPlan()}<h2>阶段总结卡</h2>
+  <div class="section"><h3>这一轮探索完成了什么</h3><p>${esc(d.completed)}</p></div>
+  <div class="section"><h3>目前收集到的信号</h3><p>${esc(d.signals)}</p></div>
+  <div class="section"><h3>阶段性判断</h3><p>${esc(d.judgement)}</p></div>
+  <div class="section"><h3>下一轮最该验证什么</h3><p>${esc(d.nextRound)}</p></div>
+  <div class="section"><h3>使用模型</h3><p>${esc(d.model||'AI')}</p></div>
+  <div class="row"><button class="secondary" onclick="next()">继续生成下一步</button><button class="ghost" onclick="start()">重新创建探索任务</button></div>`;
+ }catch(e){err(e.message)}
 }
 
 function toggleAssistant(){document.getElementById('assistantBox').classList.toggle('open')}
@@ -165,18 +170,14 @@ function addAssistant(text,who){const box=document.getElementById('assistantMess
 async function quickAssistant(text){document.getElementById('assistantInput').value=text;await sendAssistant()}
 
 async function sendAssistant(){
-const input=document.getElementById('assistantInput');
-const message=input.value.trim();
-if(!message)return;
-addAssistant(message,'user');
-input.value='';
-addAssistant('我看一下当前任务，帮你说明得更具体一点……','bot');
-try{
-const d=await api('/api/chat',{...payload(),currentAction:state.card?.action||'',message});
-const box=document.getElementById('assistantMessages');
-box.lastChild.innerHTML=esc(d.reply)+'<br><br><span class="small">使用模型：'+esc(d.model||'AI')+'</span>';
-box.scrollTop=box.scrollHeight;
-}catch(e){document.getElementById('assistantMessages').lastChild.innerHTML='出错了：'+esc(e.message)}
+ const input=document.getElementById('assistantInput');const message=input.value.trim();if(!message)return;
+ addAssistant(message,'user');input.value='';addAssistant('我看一下当前任务，帮你说明得更具体一点……','bot');
+ try{
+  const d=await api('/api/chat',{...payload(),currentAction:state.card?.action||'',message});
+  const box=document.getElementById('assistantMessages');
+  box.lastChild.innerHTML=esc(d.reply)+'<br><br><span class="small">使用模型：'+esc(d.model||'AI')+'</span>';
+  box.scrollTop=box.scrollHeight;
+ }catch(e){document.getElementById('assistantMessages').lastChild.innerHTML='出错了：'+esc(e.message)}
 }
 </script>
 </body>

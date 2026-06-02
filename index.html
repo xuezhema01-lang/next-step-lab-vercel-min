@@ -5,6 +5,43 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>下一步实验室</title>
 <style>
+body{
+  background:#f7f3ed;
+}
+
+.hero{
+  text-align:center;
+  padding:40px 0 30px;
+}
+
+.brand{
+  font-size:56px;
+  font-weight:300;
+  margin:0;
+  letter-spacing:2px;
+}
+
+.slogan{
+  margin-top:14px;
+  font-size:26px;
+  letter-spacing:8px;
+  color:#4a4037;
+}
+
+.signature{
+  margin-top:12px;
+
+  font-family:
+  "Snell Roundhand",
+  "Brush Script MT",
+  cursive;
+
+  font-size:28px;
+
+  color:#3d342d;
+
+  opacity:.85;
+}
 body{margin:0;background:#f7f3ed;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;color:#27231f}
 .wrap{max-width:900px;margin:0 auto;padding:24px 16px 88px}
 .card{background:#fffaf4;border:1px solid #eadfd3;border-radius:26px;padding:22px;margin:18px 0;box-shadow:0 14px 35px rgba(50,39,28,.08)}
@@ -29,9 +66,21 @@ button{border:0;border-radius:16px;padding:14px 16px;font-size:16px;font-weight:
 </head>
 <body>
 <div class="wrap">
-<h1>下一步实验室</h1>
-<p>当前版本：探索路线、今日小验证、今日记录、今日反馈、阶段总结、实验室助理都接入 API。</p>
+<div class="hero">
 
+  <h1 class="brand">
+    下一步实验室
+  </h1>
+
+  <div class="slogan">
+    验证你的一切纠结
+  </div>
+
+  <div class="signature">
+    Mor&Leo
+  </div>
+
+</div>
 <div class="card">
 <label>你现在在纠结什么？</label>
 <textarea id="dilemma" placeholder="比如：我要不要读博？要不要辞职？要不要做自媒体？要不要继续这段关系？要不要投入一个新项目？">我要不要读博？</textarea>

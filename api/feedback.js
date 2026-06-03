@@ -1,6 +1,7 @@
 const MODELS = [
-  "google/gemini-2.5-flash",
-  "deepseek/deepseek-v4-flash:free"
+  "google/gemini-3.5-flash",
+  "google/gemini-3.1-flash-lite",
+  "openrouter/owl-alpha"
 ];
 
 function extractJson(text) {

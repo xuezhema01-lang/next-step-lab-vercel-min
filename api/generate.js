@@ -1,7 +1,7 @@
 const MODELS = [
+  "google/gemini-3.5-flash",
   "google/gemini-3.1-flash-lite",
-  "openrouter/owl-alpha",
-  "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free"
+  "openrouter/owl-alpha"
 ];
 
 function difficultyRules(difficulty) {
@@ -72,15 +72,15 @@ async function callOpenRouter(prompt, key) {
         messages: [
           {
             role: "system",
-            content: "你是“下一步实验室”的 AI 探索陪跑器。你不替用户做最终决定，只把纠结转化成当前主题下可执行的小验证。回答必须严格输出 JSON。"
+            content: "你是“下一步实验室”的 AI 探索陪跑器。你的核心能力不是随机生成任务，而是基于用户上一轮行动记录，持续追踪并生成下一步小验证。你不替用户做最终决定，只把纠结转化成当前主题下可执行、可观察、可调整难度的小验证。回答必须严格输出 JSON。"
           },
           {
             role: "user",
             content: prompt
           }
         ],
-        temperature: 0.7,
-        max_tokens: 900
+        temperature: 0.68,
+        max_tokens: 950
       })
     });
 
@@ -119,6 +119,8 @@ module.exports = async (req, res) => {
     const p = req.body || {};
     const theme = p.todayTheme || {};
     const difficulty = p.difficulty || "学习区";
+    const records = Array.isArray(p.records) ? p.records : [];
+    const latestRecord = records.length > 0 ? records[records.length - 1] : null;
 
     const prompt = `
 你是“下一步实验室”的 AI 探索陪跑器。
@@ -149,29 +151,45 @@ ${difficulty}
 难度硬规则：
 ${difficultyRules(difficulty)}
 
-历史记录：
-${JSON.stringify(p.records || [])}
+全部历史记录：
+${JSON.stringify(records)}
 
-你的任务：
+最近一次记录：
+${latestRecord ? JSON.stringify(latestRecord) : "暂无最近记录，这是今天的第一步。"}
+
+你的核心任务：
 请围绕“今日主题”和“今日主题焦点”，生成一个今天可以做的小验证。
-注意：
+
+最重要的追踪规则：
+1. 如果“最近一次记录”存在，你必须优先回应最近一次记录；
+2. 如果用户没做、太难、有点抗拒，下一步必须降低入口、减少正式感，或者换一个更轻的切入角度；
+3. 如果用户做了一部分，下一步必须承接他已经完成的部分，不能重新开始；
+4. 如果用户更想继续，下一步可以轻微递进，但仍然只能给一个任务；
+5. 如果用户变清楚了，下一步要帮助他验证这个清楚感是否稳定；
+6. 如果用户更迷茫了，下一步不要加大任务量，要生成澄清型小验证；
+7. 如果用户没感觉，下一步要换入口，而不是重复类似任务；
+8. 不能忽略历史记录重新随机生成；
+9. 不能跳到其他天的主题；
+10. 不能替用户做最终决定。
+
+任务生成要求：
 1. 必须紧扣今日主题，不要跳到其他天的主题；
 2. 如果是同一天继续生成下一步，要在同一主题下递进，而不是换主题；
-3. 不要替用户做最终决定；
-4. 不要一次给多个任务；
-5. 任务必须具体到用户知道现在怎么开始；
-6. 语言要像人说话，简单、温和、有行动感；
-7. 判断标准必须戳中要害，不能空泛，比如不能只说“看自己感受如何”；
-8. 判断标准要帮助用户回答：这个行动后的反应说明什么。
+3. 不要一次给多个任务；
+4. 任务必须具体到用户知道现在怎么开始；
+5. 语言要像人说话，简单、温和、有行动感；
+6. 判断标准必须戳中要害，不能空泛，比如不能只说“看自己感受如何”；
+7. 判断标准要帮助用户回答：这个行动后的反应说明什么；
+8. 没做、抗拒、太难都不能被解释成失败，而要被视为调整任务的信号。
 
 请只输出 JSON，不要 Markdown，不要解释。
 
 JSON 格式如下：
 {
-  "coreConflict": "一句话总结用户当前冲突，要结合原始纠结和今日主题",
+  "coreConflict": "一句话总结用户当前冲突，要结合原始纠结、今日主题和最近记录",
   "notDecide": "告诉用户今天不用决定什么，降低压力",
-  "verifyQuestion": "今天只验证的一个关键问题，必须围绕今日主题",
-  "action": "一个具体动作，必须符合当前难度规则",
+  "verifyQuestion": "今天只验证的一个关键问题，必须围绕今日主题，并尽量回应最近记录",
+  "action": "一个具体动作，必须符合当前难度规则，并且承接最近记录",
   "judgement": "2-3条判断标准，写成一段话，帮助用户知道做完后如何判断"
 }
 `;

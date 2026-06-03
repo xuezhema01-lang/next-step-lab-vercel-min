@@ -1,6 +1,7 @@
 const MODELS = [
-  "google/gemini-2.5-flash",
-  "deepseek/deepseek-v4-flash:free"
+  "google/gemini-3.1-flash-lite",
+  "openrouter/owl-alpha",
+  "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free"
 ];
 
 function difficultyRules(difficulty) {
